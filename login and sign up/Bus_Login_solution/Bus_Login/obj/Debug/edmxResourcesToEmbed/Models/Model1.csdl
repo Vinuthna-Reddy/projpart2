@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Bus_ProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Registered_User">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="lname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="phone_no" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="wallet" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="email_id" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Bookings" Relationship="Bus_ProjectModel.FK__Booking__user_id__1FCDBCEB" FromRole="Registered_User" ToRole="Booking" />
+    <NavigationProperty Name="payments" Relationship="Bus_ProjectModel.FK__payment__user_id__2B3F6F97" FromRole="Registered_User" ToRole="payment" />
+  </EntityType>
+  <EntityContainer Name="Bus_ProjectEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Registered_User" EntityType="Self.Registered_User" />
+    <FunctionImport Name="sp_LoginCheck" ReturnType="Collection(String)">
+      <Parameter Name="un" Mode="In" Type="String" />
+      <Parameter Name="pass" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="Bookings" EntityType="Bus_ProjectModel.Booking" />
+    <EntitySet Name="Bus_Details" EntityType="Bus_ProjectModel.Bus_Details" />
+    <EntitySet Name="Coach_bus" EntityType="Bus_ProjectModel.Coach_bus" />
+    <EntitySet Name="Guests" EntityType="Bus_ProjectModel.Guest" />
+    <EntitySet Name="payments" EntityType="Bus_ProjectModel.payment" />
+    <EntitySet Name="Seats" EntityType="Bus_ProjectModel.Seat" />
+    <EntitySet Name="Travels" EntityType="Bus_ProjectModel.Travel" />
+    <AssociationSet Name="FK__Booking__bus_id__5CD6CB2B" Association="Bus_ProjectModel.FK__Booking__bus_id__5CD6CB2B">
+      <End Role="Bus_Details" EntitySet="Bus_Details" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Booking__coach_b__47DBAE45" Association="Bus_ProjectModel.FK__Booking__coach_b__47DBAE45">
+      <End Role="Coach_bus" EntitySet="Coach_bus" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Booking__Guest_I__20C1E124" Association="Bus_ProjectModel.FK__Booking__Guest_I__20C1E124">
+      <End Role="Guest" EntitySet="Guests" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Booking__Travel___21B6055D" Association="Bus_ProjectModel.FK__Booking__Travel___21B6055D">
+      <End Role="Travel" EntitySet="Travels" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Booking__user_id__1FCDBCEB" Association="Bus_ProjectModel.FK__Booking__user_id__1FCDBCEB">
+      <End Role="Registered_User" EntitySet="Registered_User" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__payment__booking__2D27B809" Association="Bus_ProjectModel.FK__payment__booking__2D27B809">
+      <End Role="Booking" EntitySet="Bookings" />
+      <End Role="payment" EntitySet="payments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Seats__booking_i__5AEE82B9" Association="Bus_ProjectModel.FK__Seats__booking_i__5AEE82B9">
+      <End Role="Booking" EntitySet="Bookings" />
+      <End Role="Seat" EntitySet="Seats" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Seats__Bus_ID__1B0907CE" Association="Bus_ProjectModel.FK__Seats__Bus_ID__1B0907CE">
+      <End Role="Bus_Details" EntitySet="Bus_Details" />
+      <End Role="Seat" EntitySet="Seats" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Travel__Bus_ID__182C9B23" Association="Bus_ProjectModel.FK__Travel__Bus_ID__182C9B23">
+      <End Role="Bus_Details" EntitySet="Bus_Details" />
+      <End Role="Travel" EntitySet="Travels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Travel__coach_bu__3A81B327" Association="Bus_ProjectModel.FK__Travel__coach_bu__3A81B327">
+      <End Role="Coach_bus" EntitySet="Coach_bus" />
+      <End Role="Travel" EntitySet="Travels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__payment__guest_i__2C3393D0" Association="Bus_ProjectModel.FK__payment__guest_i__2C3393D0">
+      <End Role="Guest" EntitySet="Guests" />
+      <End Role="payment" EntitySet="payments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__payment__user_id__2B3F6F97" Association="Bus_ProjectModel.FK__payment__user_id__2B3F6F97">
+      <End Role="Registered_User" EntitySet="Registered_User" />
+      <End Role="payment" EntitySet="payments" />
+    </AssociationSet>
+    <FunctionImport Name="sp_BookedSeats" ReturnType="Collection(Int32)">
+      <Parameter Name="bus_id" Mode="In" Type="Int32" />
+      <Parameter Name="status" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="booking_id" />
+    </Key>
+    <Property Name="booking_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" />
+    <Property Name="Guest_Id" Type="Int32" />
+    <Property Name="Travel_Id" Type="Int32" />
+    <Property Name="coach_bus_id" Type="Int32" />
+    <Property Name="booking_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="bus_id" Type="Int32" />
+    <NavigationProperty Name="Bus_Details" Relationship="Bus_ProjectModel.FK__Booking__bus_id__5CD6CB2B" FromRole="Booking" ToRole="Bus_Details" />
+    <NavigationProperty Name="Coach_bus" Relationship="Bus_ProjectModel.FK__Booking__coach_b__47DBAE45" FromRole="Booking" ToRole="Coach_bus" />
+    <NavigationProperty Name="Guest" Relationship="Bus_ProjectModel.FK__Booking__Guest_I__20C1E124" FromRole="Booking" ToRole="Guest" />
+    <NavigationProperty Name="Travel" Relationship="Bus_ProjectModel.FK__Booking__Travel___21B6055D" FromRole="Booking" ToRole="Travel" />
+    <NavigationProperty Name="Registered_User" Relationship="Bus_ProjectModel.FK__Booking__user_id__1FCDBCEB" FromRole="Booking" ToRole="Registered_User" />
+    <NavigationProperty Name="payments" Relationship="Bus_ProjectModel.FK__payment__booking__2D27B809" FromRole="Booking" ToRole="payment" />
+    <NavigationProperty Name="Seats" Relationship="Bus_ProjectModel.FK__Seats__booking_i__5AEE82B9" FromRole="Booking" ToRole="Seat" />
+  </EntityType>
+  <EntityType Name="Bus_Details">
+    <Key>
+      <PropertyRef Name="Bus_ID" />
+    </Key>
+    <Property Name="Bus_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Bus_Type" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Cost_Per_Seat" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="NO_of_Seats" Type="Int32" />
+    <NavigationProperty Name="Bookings" Relationship="Bus_ProjectModel.FK__Booking__bus_id__5CD6CB2B" FromRole="Bus_Details" ToRole="Booking" />
+    <NavigationProperty Name="Seats" Relationship="Bus_ProjectModel.FK__Seats__Bus_ID__1B0907CE" FromRole="Bus_Details" ToRole="Seat" />
+    <NavigationProperty Name="Travels" Relationship="Bus_ProjectModel.FK__Travel__Bus_ID__182C9B23" FromRole="Bus_Details" ToRole="Travel" />
+  </EntityType>
+  <EntityType Name="Coach_bus">
+    <Key>
+      <PropertyRef Name="coach_bus_id" />
+    </Key>
+    <Property Name="coach_bus_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Bus_type" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="No_of_seats" Type="Int32" />
+    <Property Name="cost_per_day" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="driver_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="driver_license_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Bookings" Relationship="Bus_ProjectModel.FK__Booking__coach_b__47DBAE45" FromRole="Coach_bus" ToRole="Booking" />
+    <NavigationProperty Name="Travels" Relationship="Bus_ProjectModel.FK__Travel__coach_bu__3A81B327" FromRole="Coach_bus" ToRole="Travel" />
+  </EntityType>
+  <EntityType Name="Guest">
+    <Key>
+      <PropertyRef Name="Guest_ID" />
+    </Key>
+    <Property Name="Guest_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="email_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="phone_no" Type="Decimal" Precision="10" Scale="0" />
+    <NavigationProperty Name="Bookings" Relationship="Bus_ProjectModel.FK__Booking__Guest_I__20C1E124" FromRole="Guest" ToRole="Booking" />
+    <NavigationProperty Name="payments" Relationship="Bus_ProjectModel.FK__payment__guest_i__2C3393D0" FromRole="Guest" ToRole="payment" />
+  </EntityType>
+  <EntityType Name="payment">
+    <Key>
+      <PropertyRef Name="transaction_id" />
+    </Key>
+    <Property Name="transaction_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" />
+    <Property Name="guest_id" Type="Int32" />
+    <Property Name="booking_id" Type="Int32" />
+    <Property Name="total_price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="payment_status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Booking" Relationship="Bus_ProjectModel.FK__payment__booking__2D27B809" FromRole="payment" ToRole="Booking" />
+    <NavigationProperty Name="Guest" Relationship="Bus_ProjectModel.FK__payment__guest_i__2C3393D0" FromRole="payment" ToRole="Guest" />
+    <NavigationProperty Name="Registered_User" Relationship="Bus_ProjectModel.FK__payment__user_id__2B3F6F97" FromRole="payment" ToRole="Registered_User" />
+  </EntityType>
+  <EntityType Name="Seat">
+    <Key>
+      <PropertyRef Name="Seat_no" />
+      <PropertyRef Name="Bus_ID" />
+    </Key>
+    <Property Name="Seat_no" Type="Int32" Nullable="false" />
+    <Property Name="Bus_ID" Type="Int32" Nullable="false" />
+    <Property Name="seat_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="passenger_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="booking_id" Type="Int32" />
+    <NavigationProperty Name="Booking" Relationship="Bus_ProjectModel.FK__Seats__booking_i__5AEE82B9" FromRole="Seat" ToRole="Booking" />
+    <NavigationProperty Name="Bus_Details" Relationship="Bus_ProjectModel.FK__Seats__Bus_ID__1B0907CE" FromRole="Seat" ToRole="Bus_Details" />
+  </EntityType>
+  <EntityType Name="Travel">
+    <Key>
+      <PropertyRef Name="Travel_ID" />
+    </Key>
+    <Property Name="Travel_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="pickup_place" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="drop_place" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Departure_Time" Type="DateTime" Precision="3" />
+    <Property Name="Arrival_Time" Type="DateTime" Precision="3" />
+    <Property Name="Bus_ID" Type="Int32" />
+    <Property Name="no_of_days" Type="Int32" />
+    <Property Name="coach_bus_id" Type="Int32" />
+    <NavigationProperty Name="Bookings" Relationship="Bus_ProjectModel.FK__Booking__Travel___21B6055D" FromRole="Travel" ToRole="Booking" />
+    <NavigationProperty Name="Bus_Details" Relationship="Bus_ProjectModel.FK__Travel__Bus_ID__182C9B23" FromRole="Travel" ToRole="Bus_Details" />
+    <NavigationProperty Name="Coach_bus" Relationship="Bus_ProjectModel.FK__Travel__coach_bu__3A81B327" FromRole="Travel" ToRole="Coach_bus" />
+  </EntityType>
+  <Association Name="FK__Booking__bus_id__5CD6CB2B">
+    <End Type="Bus_ProjectModel.Bus_Details" Role="Bus_Details" Multiplicity="0..1" />
+    <End Type="Bus_ProjectModel.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bus_Details">
+        <PropertyRef Name="Bus_ID" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="bus_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Booking__coach_b__47DBAE45">
+    <End Type="Bus_ProjectModel.Coach_bus" Role="Coach_bus" Multiplicity="0..1" />
+    <End Type="Bus_ProjectModel.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Coach_bus">
+        <PropertyRef Name="coach_bus_id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="coach_bus_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Booking__Guest_I__20C1E124">
+    <End Type="Bus_ProjectModel.Guest" Role="Guest" Multiplicity="0..1" />
+    <End Type="Bus_ProjectModel.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Guest">
+        <PropertyRef Name="Guest_ID" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="Guest_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Booking__Travel___21B6055D">
+    <End Type="Bus_ProjectModel.Travel" Role="Travel" Multiplicity="0..1" />
+    <End Type="Bus_ProjectModel.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Travel">
+        <PropertyRef Name="Travel_ID" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="Travel_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Booking__user_id__1FCDBCEB">
+    <End Type="Bus_ProjectModel.Registered_User" Role="Registered_User" Multiplicity="0..1" />
+    <End Type="Bus_ProjectModel.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Registered_User">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__payment__booking__2D27B809">
+    <End Type="Bus_ProjectModel.Booking" Role="Booking" Multiplicity="0..1" />
+    <End Type="Bus_ProjectModel.payment" Role="payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="booking_id" />
+      </Principal>
+      <Dependent Role="payment">
+        <PropertyRef Name="booking_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Seats__booking_i__5AEE82B9">
+    <End Type="Bus_ProjectModel.Booking" Role="Booking" Multiplicity="0..1" />
+    <End Type="Bus_ProjectModel.Seat" Role="Seat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="booking_id" />
+      </Principal>
+      <Dependent Role="Seat">
+        <PropertyRef Name="booking_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Seats__Bus_ID__1B0907CE">
+    <End Type="Bus_ProjectModel.Bus_Details" Role="Bus_Details" Multiplicity="1" />
+    <End Type="Bus_ProjectModel.Seat" Role="Seat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bus_Details">
+        <PropertyRef Name="Bus_ID" />
+      </Principal>
+      <Dependent Role="Seat">
+        <PropertyRef Name="Bus_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Travel__Bus_ID__182C9B23">
+    <End Type="Bus_ProjectModel.Bus_Details" Role="Bus_Details" Multiplicity="0..1" />
+    <End Type="Bus_ProjectModel.Travel" Role="Travel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bus_Details">
+        <PropertyRef Name="Bus_ID" />
+      </Principal>
+      <Dependent Role="Travel">
+        <PropertyRef Name="Bus_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Travel__coach_bu__3A81B327">
+    <End Type="Bus_ProjectModel.Coach_bus" Role="Coach_bus" Multiplicity="0..1" />
+    <End Type="Bus_ProjectModel.Travel" Role="Travel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Coach_bus">
+        <PropertyRef Name="coach_bus_id" />
+      </Principal>
+      <Dependent Role="Travel">
+        <PropertyRef Name="coach_bus_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__payment__guest_i__2C3393D0">
+    <End Type="Bus_ProjectModel.Guest" Role="Guest" Multiplicity="0..1" />
+    <End Type="Bus_ProjectModel.payment" Role="payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Guest">
+        <PropertyRef Name="Guest_ID" />
+      </Principal>
+      <Dependent Role="payment">
+        <PropertyRef Name="guest_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__payment__user_id__2B3F6F97">
+    <End Type="Bus_ProjectModel.Registered_User" Role="Registered_User" Multiplicity="0..1" />
+    <End Type="Bus_ProjectModel.payment" Role="payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Registered_User">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="payment">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

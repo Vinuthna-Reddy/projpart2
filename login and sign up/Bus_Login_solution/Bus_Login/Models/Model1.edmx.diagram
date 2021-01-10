@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f464e3853ee44a1e90382ad6dbfd49b0" Name="Diagram1">
+        <EntityTypeShape EntityType="Bus_ProjectModel.Registered_User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Bus_ProjectModel.Booking" Width="1.5" PointX="5.625" PointY="2.25" />
+        <EntityTypeShape EntityType="Bus_ProjectModel.Bus_Details" Width="1.5" PointX="3.375" PointY="5" />
+        <EntityTypeShape EntityType="Bus_ProjectModel.Coach_bus" Width="1.5" PointX="3.375" PointY="1.375" />
+        <EntityTypeShape EntityType="Bus_ProjectModel.Guest" Width="1.5" PointX="3.375" PointY="8.625" />
+        <EntityTypeShape EntityType="Bus_ProjectModel.payment" Width="1.5" PointX="7.875" PointY="2" />
+        <EntityTypeShape EntityType="Bus_ProjectModel.Seat" Width="1.5" PointX="7.875" PointY="5.625" />
+        <EntityTypeShape EntityType="Bus_ProjectModel.Travel" Width="1.5" PointX="5.625" PointY="7.625" />
+        <AssociationConnector Association="Bus_ProjectModel.FK__Booking__bus_id__5CD6CB2B" />
+        <AssociationConnector Association="Bus_ProjectModel.FK__Booking__coach_b__47DBAE45" />
+        <AssociationConnector Association="Bus_ProjectModel.FK__Booking__Guest_I__20C1E124" />
+        <AssociationConnector Association="Bus_ProjectModel.FK__Booking__Travel___21B6055D" />
+        <AssociationConnector Association="Bus_ProjectModel.FK__Booking__user_id__1FCDBCEB" />
+        <AssociationConnector Association="Bus_ProjectModel.FK__payment__booking__2D27B809" />
+        <AssociationConnector Association="Bus_ProjectModel.FK__Seats__booking_i__5AEE82B9" />
+        <AssociationConnector Association="Bus_ProjectModel.FK__Seats__Bus_ID__1B0907CE" />
+        <AssociationConnector Association="Bus_ProjectModel.FK__Travel__Bus_ID__182C9B23" />
+        <AssociationConnector Association="Bus_ProjectModel.FK__Travel__coach_bu__3A81B327" />
+        <AssociationConnector Association="Bus_ProjectModel.FK__payment__guest_i__2C3393D0" />
+        <AssociationConnector Association="Bus_ProjectModel.FK__payment__user_id__2B3F6F97" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
